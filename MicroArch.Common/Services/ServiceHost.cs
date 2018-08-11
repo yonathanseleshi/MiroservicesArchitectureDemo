@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MicroArch.Common.Commands;
 using MicroArch.Common.Events;
+using MicroArch.Common.RabbitMQ;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -95,10 +96,10 @@ namespace MicroArch.Common.Services
 
                 }
 
-                public BusBuilder SubscribeToCommand<TEvent>() where TEvent : IEvent
+                public BusBuilder SubscribeToEvent<TEvent>() where TEvent : IEvent
                 {
                     var handler = (IEventHandler<TEvent>)_webHost.Services
-                        .GetService(typeof(ICommandHandler<TEvent>));
+                        .GetService(typeof(IEventHandler<TEvent>));
 
                     _bus.WithEventHandlerAsync(handler);
 
