@@ -19,11 +19,4 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MicroArch.API\MicroArch.API.csproj" />
-    <ProjectReference Include="..\MicroArch.Common\MicroArch.Common.csproj" />
-    <ProjectReference Include="..\MicroArch.Services.Activities\MicroArch.Services.Activities.csproj" />
-    <ProjectReference Include="..\MicroArch.Services.Identity\MicroArch.Services.Identity.csproj" />
-  </ItemGroup>
-
 </Project>

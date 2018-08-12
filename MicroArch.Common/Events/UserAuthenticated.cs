@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroArch.Common.Events
 {
-    class UserAuthenticated : IEvent
+    public class UserAuthenticated : IEvent
     {
 
         public string Email { get; }

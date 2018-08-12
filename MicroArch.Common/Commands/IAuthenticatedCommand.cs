@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroArch.Common.Commands
 {
-    interface IAuthenticatedCommand : ICommand
+    public interface IAuthenticatedCommand : ICommand
     {
 
         Guid UserId { get; set; }

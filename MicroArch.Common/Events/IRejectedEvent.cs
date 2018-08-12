@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroArch.Common.Events
 {
-    interface IRejectedEvent
+    public interface IRejectedEvent
     {
 
         string Reason { get; }

@@ -5,9 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using MicroArch.Common.Commands;
 using MicroArch.Common.Events;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using RawRabbit;
+using RawRabbit.Common;
+using RawRabbit.Instantiation;
 using RawRabbit.Pipe;
 using RawRabbit.Pipe.Middleware;
+using RawRabbit.vNext;
 
 namespace MicroArch.Common.RabbitMQ
 {
@@ -28,6 +33,31 @@ namespace MicroArch.Common.RabbitMQ
 
         private static string GetQueueName<T>()
             => $"{Assembly.GetEntryAssembly().GetName()}/{typeof(T).Name}";
+
+        public static void AddRabbitMq(this IServiceCollection service, IConfiguration configuration)
+        {
+            /*
+          var connectionString = configuration.GetConnectionString("rabbitmq");
+          var config = ConnectionStringParser.Parse(connectionString);
+          var client = BusClientFactory.CreateDefault(config);
+            */
+
+            var options = new RabbitMqOptions();
+           var section = configuration.GetSection("rabbitmq");
+
+           section.Bind(options);
+           var client = RawRabbitFactory.CreateSingleton(new RawRabbitOptions
+           {
+
+
+               ClientConfiguration = options
+
+           });
+            
+
+            service.AddSingleton<IBusClient>(_ => client);
+         
+        }
     }
 }
 

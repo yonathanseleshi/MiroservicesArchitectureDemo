@@ -59,7 +59,7 @@ namespace MicroArch.Common.Services
                 _webHost = webHost;
             }
 
-            public BusBuilder UseRabbitMQ()
+            public BusBuilder UseRabbitMq()
             {
                 _bus = (IBusClient) _webHost.Services.GetService(typeof(IBusClient));
 
@@ -107,9 +107,10 @@ namespace MicroArch.Common.Services
 
                 }
 
+
                 public override ServiceHost Build()
                 {
-                    throw new NotImplementedException();
+                    return new ServiceHost(_webHost);
                 }
             }
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroArch.Common.Events
 {
-    class CreateUserRejected : IRejectedEvent
+    public class CreateUserRejected : IRejectedEvent
     {
         public string Reason { get; }
         public string Code { get; }

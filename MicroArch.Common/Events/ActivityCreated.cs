@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroArch.Common.Events
 {
-    class ActivityCreated : IAuthenticatedEvent
+    public class ActivityCreated : IAuthenticatedEvent
     {
         public Guid UserID { get;  }
         public Guid ID { get;  }
@@ -17,9 +17,10 @@ namespace MicroArch.Common.Events
 
         public DateTime CreatedAtDate { get;  }
 
-        public ActivityCreated(Guid userID, Guid iD, string name, string category, string description, DateTime createdAtDate)
+        public ActivityCreated(Guid iD, Guid userId, string name, string category, string description, DateTime createdAtDate)
         {
-            UserID = userID;
+
+            UserID = userId;
             ID = iD;
             Name = name;
             Category = category;
