@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using MicroArch.Common.Commands;
 using MicroArch.Common.Events;
+using MicroArch.Common.Mongo;
 using MicroArch.Common.RabbitMQ;
 using MicroArch.Services.Activities.Handlers;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +35,8 @@ namespace MicroArch.Services.Activities
             services.AddRabbitMq(Configuration);
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
            
+            services.AddMongoDb(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
