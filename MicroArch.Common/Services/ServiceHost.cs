@@ -13,8 +13,8 @@ using RawRabbit;
 namespace MicroArch.Common.Services
 {
     public class ServiceHost : IServiceHost
-    {
-        private readonly IWebHost _webHost;
+        {
+            private readonly IWebHost _webHost;
 
         public ServiceHost(IWebHost webHost)
         {

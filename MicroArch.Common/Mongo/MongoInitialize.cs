@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace MicroArch.Common.Mongo
 {
-    class MongoInitialize : IDatabaseInitializer
+    public class MongoInitialize : IDatabaseInitializer
     {
 
         private bool _initialized;
@@ -17,11 +17,14 @@ namespace MicroArch.Common.Mongo
         private readonly bool _seed;
 
         private readonly IMongoDatabase _database;
+        private readonly IDatabaseSeeder _seeder;
 
-        public MongoInitialize(IMongoDatabase database, IOptions<MongoOptions> options)
+        public MongoInitialize(IMongoDatabase database, IDatabaseSeeder seeder, IOptions<MongoOptions> options)
         {
            
+
             _database = database;
+            _seeder = seeder;
             _seed = options.Value.Seed;
         }
 
@@ -38,6 +41,8 @@ namespace MicroArch.Common.Mongo
             {
                 return;
             }
+
+            await _seeder.SeedAsync();
         }
 
         private void RegisterConventions()

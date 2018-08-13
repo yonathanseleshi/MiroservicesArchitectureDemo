@@ -37,6 +37,7 @@ namespace MicroArch.Common.Mongo
             });
 
             services.AddScoped<IDatabaseInitializer, MongoInitialize>();
+            services.AddScoped<IDatabaseSeeder, MongoSeeder>();
 
         }
     }

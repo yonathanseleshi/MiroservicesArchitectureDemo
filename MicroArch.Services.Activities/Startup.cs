@@ -7,7 +7,10 @@ using MicroArch.Common.Commands;
 using MicroArch.Common.Events;
 using MicroArch.Common.Mongo;
 using MicroArch.Common.RabbitMQ;
+using MicroArch.Services.Activities.Domain.Repositories;
 using MicroArch.Services.Activities.Handlers;
+using MicroArch.Services.Activities.Repositories;
+using MicroArch.Services.Activities.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,15 +36,24 @@ namespace MicroArch.Services.Activities
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddRabbitMq(Configuration);
-            services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
-           
             services.AddMongoDb(Configuration);
+            services.AddLogging();
+            services.AddSingleton<ICommandHandler<CreateActivity>, CreateActivityHandler>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IDatabaseSeeder, NewMongoSeeder>();
+            
+
+            
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service, ILoggerFactory loggerFactory)
         {
+
+            loggerFactory.AddDebug();
+            loggerFactory.AddConsole();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,8 +63,15 @@ namespace MicroArch.Services.Activities
                 app.UseHsts();
             }
 
+           // app.ApplicationServices.GetService<IDatabaseInitializer>().InitializeAsync();
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<IDatabaseInitializer>().InitializeAsync();
+            }
             app.UseHttpsRedirection();
+            
             app.UseMvc();
+            
         }
     }
 }
